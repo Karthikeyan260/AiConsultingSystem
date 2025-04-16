@@ -378,6 +378,63 @@ export default function Home() {
           </div>
         </div>
       </motion.section>
+{/* Author Info Section */}
+<section className="py-20 bg-gradient-to-b from-background/50 to-background">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+        Meet Our Team
+      </h2>
+      <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        Our team of AI experts brings years of experience and innovation to help your business succeed.
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Author 1 */}
+      <div className="text-center bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg transition-all duration-300">
+        <img
+          src="https://avatars.githubusercontent.com/u/140727545?v=4"
+          alt="Author 1"
+          className="w-24 h-24 mx-auto rounded-full mb-4"
+        />
+        <h3 className="font-semibold text-xl mb-2">Karthikeyan</h3>
+        <p className="text-sm text-muted-foreground mb-4">FullStack Developer</p>
+        <p className="text-muted-foreground">
+          Karthikeyan specializes in AI strategy and implementation, helping businesses achieve their goals with cutting-edge solutions.
+        </p>
+      </div>
+
+      {/* Author 2 */}
+      <div className="text-center bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg transition-all duration-300">
+        <img
+          src="https://avatars.githubusercontent.com/u/142210572?v=4"
+          alt="Author 2"
+          className="w-24 h-24 mx-auto rounded-full mb-4"
+        />
+        <h3 className="font-semibold text-xl mb-2">Gokul </h3>
+        <p className="text-sm text-muted-foreground mb-4">Data Scientist</p>
+        <p className="text-muted-foreground">
+          Gokul has over a decade of experience in data analytics and machine learning, delivering actionable insights for clients.
+        </p>
+      </div>
+
+      {/* Author 3 */}
+      <div className="text-center bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg transition-all duration-300">
+        <img
+          src="https://media.licdn.com/dms/image/v2/D5635AQEdEVlm8Yq0ug/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1733133110208?e=1745409600&v=beta&t=DvFvIX0zWkDgMkN-4AoEwfcUApUljCIbaCqXRAm4Xs4"
+          alt="Author 3"
+          className="w-24 h-24 mx-auto rounded-full mb-4"
+        />
+        <h3 className="font-semibold text-xl mb-2"> Murugadass</h3>
+        <p className="text-sm text-muted-foreground mb-4">UI&UX Designer</p>
+        <p className="text-muted-foreground">
+        Murugadass designs and implements AI-driven solutions tailored to meet the unique needs of businesses across industries.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Testimonials Section */}
       <section className="py-20 bg-gradient-to-b from-background to-background/80">
