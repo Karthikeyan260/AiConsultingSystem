@@ -574,27 +574,27 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Services</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="service" className="text-muted-foreground hover:text-primary transition-colors">
                     AI Strategy
                   </a>
                 </li>
                 <li>
-                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="service" className="text-muted-foreground hover:text-primary transition-colors">
                     Data Analytics
                   </a>
                 </li>
                 <li>
-                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="service" className="text-muted-foreground hover:text-primary transition-colors">
                     Machine Learning
                   </a>
                 </li>
                 <li>
-                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="service" className="text-muted-foreground hover:text-primary transition-colors">
                     Process Automation
                   </a>
                 </li>
                 <li>
-                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="service" className="text-muted-foreground hover:text-primary transition-colors">
                     Natural Language Processing
                   </a>
                 </li>
@@ -636,22 +636,22 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="https://aiconsultingsystem.netlify.app/contact" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="contact" className="text-muted-foreground hover:text-primary transition-colors">
                     About Us
                   </a>
                 </li>
                 <li>
-                  <a href="https://aiconsultingsystem.netlify.app/case-studies" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="case-studies" className="text-muted-foreground hover:text-primary transition-colors">
                     Case Studies
                   </a>
                 </li>
                 <li>
-                  <a href="https://blog-delta-nine-70.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="blog" className="text-muted-foreground hover:text-primary transition-colors">
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a href="https://blog-np6b.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="career" className="text-muted-foreground hover:text-primary transition-colors">
                     Careers
                   </a>
                 </li>
@@ -669,7 +669,7 @@ export default function Home() {
               © {new Date().getFullYear()} AI Consulting System. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              <a href="policies" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Privacy Policy
               </a>
               <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
