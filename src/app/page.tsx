@@ -656,7 +656,7 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="contact" className="text-muted-foreground hover:text-primary transition-colors">
                     Contact
                   </a>
                 </li>
