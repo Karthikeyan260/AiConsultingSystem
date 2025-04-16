@@ -574,27 +574,27 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Services</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
                     AI Strategy
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
                     Data Analytics
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
                     Machine Learning
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
                     Process Automation
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://services-eight-theta.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
                     Natural Language Processing
                   </a>
                 </li>
@@ -605,22 +605,22 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Industries</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="/domains/education" className="text-muted-foreground hover:text-primary transition-colors">
                     Education
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="/domains/healthcare" className="text-muted-foreground hover:text-primary transition-colors">
                     Healthcare
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="/domains/finance" className="text-muted-foreground hover:text-primary transition-colors">
                     Finance
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="/domains/retail" className="text-muted-foreground hover:text-primary transition-colors">
                     Retail
                   </a>
                 </li>
@@ -636,22 +636,22 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://aiconsultingsystem.netlify.app/contact" className="text-muted-foreground hover:text-primary transition-colors">
                     About Us
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://aiconsultingsystem.netlify.app/case-studies" className="text-muted-foreground hover:text-primary transition-colors">
                     Case Studies
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://blog-delta-nine-70.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://blog-np6b.vercel.app/" className="text-muted-foreground hover:text-primary transition-colors">
                     Careers
                   </a>
                 </li>
