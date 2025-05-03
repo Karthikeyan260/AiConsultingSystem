@@ -62,7 +62,7 @@ export default function GetStarted() {
           whileHover={{ scale: 1.05 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <Link href="https://aiconsultingsystem.netlify.app/" >
+          <Link href="/" >
             <Button className="px-8 py-3 text-white text-lg bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 transition-all rounded-xl shadow-lg">
               Get Started Now
             </Button>
