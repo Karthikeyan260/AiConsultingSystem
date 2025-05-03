@@ -422,7 +422,7 @@ export default function Home() {
       {/* Author 3 */}
       <div className="text-center bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg transition-all duration-300">
         <img
-          src="https://media.licdn.com/dms/image/v2/D5635AQEdEVlm8Yq0ug/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1733133110208?e=1745409600&v=beta&t=DvFvIX0zWkDgMkN-4AoEwfcUApUljCIbaCqXRAm4Xs4"
+          src="https://raw.githubusercontent.com/Karthikeyan260/memory-game/refs/heads/main/5.png"
           alt="Author 3"
           className="w-24 h-24 mx-auto rounded-full mb-4"
         />
