@@ -1,51 +1,71 @@
+Perfect! I've now updated the README with your actual **Netlify deploy badge** link. Here's the final version:
+
+---
+
 # 🧠 AI-Driven Consulting System
 
-An intelligent expert system that provides domain-specific consulting across **Education, Healthcare, Finance**, and **Retail** using AI-powered chatbots. Built with **React.js** for the frontend and **Flask** for the backend, the system leverages NLP and machine learning models to provide real-time, context-aware responses to user queries.
+![AI-Driven Consulting Banner](https://user-images.githubusercontent.com/your-banner-path/banner-ai-consulting-system.png)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a731616a-b485-43b2-85d3-1aa35b028bab/deploy-status)](https://app.netlify.com/sites/aiconsultingsystem/deploys)
+
+An intelligent expert system that provides domain-specific consulting across **Education, Healthcare, Finance**, and **Retail** using AI-powered chatbots. Built with **Next.js** for the frontend and **Gemini API** for backend intelligence, the system leverages natural language understanding to provide real-time, context-aware responses to user queries.
+
+---
 
 ## 🌐 Live Demo
-🚀 *[Coming Soon]*
+
+🚀 [https://aiconsultingsystem.netlify.app](https://aiconsultingsystem.netlify.app)
 
 ---
 
 ## 📌 Features
 
-- ✨ User-friendly homepage with title and authentication (Sign In / Sign Up)
-- 📊 Four expert domains: Education, Healthcare, Finance, Retail
-- 💬 Domain-specific AI chatbot for real-time interaction
-- 🧠 NLP + ML-powered chatbot trained using TensorFlow and scikit-learn
-- 🛠️ Feedback system to improve model accuracy
-- 🔐 JWT-based authentication
-- 📚 MongoDB integration for user data and chat logs
+* ✨ User-friendly homepage with title and authentication (Sign In / Sign Up)
+* 📊 Four expert domains: Education, Healthcare, Finance, Retail
+* 💬 Domain-specific AI chatbot for real-time interaction
+* 🧠 Gemini API-powered chatbot for accurate, dynamic responses
+* 🛠️ Feedback system to improve answer quality
+* 🔐 JWT-based authentication
+* 📚 MongoDB integration for user data and chat logs
 
 ---
 
 ## 🧱 Tech Stack
 
 ### Frontend
-- **React.js**
-- **Redux**
-- **Tailwind CSS**
+
+* **Next.js**
+* **Redux**
+* **Tailwind CSS**
 
 ### Backend
-- **Flask**
-- **Flask-RESTful**
-- **JWT Authentication**
+
+* **Gemini API (Google AI)**
+* **JWT Authentication**
 
 ### Database
-- **MongoDB (MongoDB Atlas)**
 
-### AI Models
-- **TensorFlow**
-- **scikit-learn**
-- **NLTK / spaCy (for NLP tasks)**
+* **MongoDB (MongoDB Atlas)**
 
 ---
 
 ## 📁 Project Structure
 
-ai-consulting-system/ │ ├── client/ # React Frontend │ ├── public/ │ └── src/ │ ├── components/ │ ├── pages/ │ └── redux/ │ ├── server/ # Flask Backend │ ├── app/ │ │ ├── models/ │ │ ├── routes/ │ │ ├── services/ │ │ └── ai_models/ │ └── main.py │ ├── .env ├── README.md └── requirements.txt
-
-
+```
+ai-consulting-system/
+├── client/               # Next.js Frontend
+│   ├── public/
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       └── redux/
+├── server/               # Gemini API integration
+│   ├── services/
+│   └── ai_models/
+├── .env
+├── README.md
+└── requirements.txt
+```
 
 ---
 
@@ -53,38 +73,58 @@ ai-consulting-system/ │ ├── client/ # React Frontend │ ├── publi
 
 ### Prerequisites
 
-- Node.js
-- Python 3.8+
-- MongoDB Atlas account
+* Node.js
+* Google Cloud account with access to Gemini API
+* MongoDB Atlas account
 
 ### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/ai-consulting-system.git
 cd ai-consulting-system
-2. Setup Frontend (React)
+```
 
+### 2. Setup Frontend (Next.js)
+
+```bash
 cd client
 npm install
-npm dev run 
-4. Environment Variables
-Create a .env file in both client/ and server/ directories to store API URLs, JWT secrets, DB connection strings, etc.
+npm run dev
+```
 
-💡 How It Works
-User lands on the homepage → signs in or signs up.
+### 3. Environment Variables
 
-Selects a domain → redirected to chatbot.
+Create a `.env` file in both `client/` and `server/` directories to store:
 
+* Gemini API keys
+* MongoDB connection string
+* JWT secrets
+* API endpoints
 
-Feedback system helps fine-tune responses.
+---
 
+## 💡 How It Works
 
+1. User lands on the homepage → signs in or signs up
+2. Selects a consulting domain
+3. Interacts with the AI chatbot powered by Gemini API
+4. Feedback system logs responses for future fine-tuning
 
-✨ Acknowledgements
+---
 
-Tailwind CSS
+## ✨ Acknowledgements
 
-📬 Contact
-Developer: Karthikeyan
-📧 kartji005@gmail.com
+* Tailwind CSS
+* Google Gemini API
+* MongoDB Atlas
+
+---
+
+## 📬 Contact
+
+**Developer:** Karthikeyan
+📧 [kartji005@gmail.com](mailto:kartji005@gmail.com)
 📱 9345766900
+
+---
+
