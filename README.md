@@ -4,7 +4,7 @@ Perfect! I've now updated the README with your actual **Netlify deploy badge** l
 
 # 🧠 AI-Driven Consulting System
 
-![AI-Driven Consulting Banner](https://user-images.githubusercontent.com/your-banner-path/banner-ai-consulting-system.png)
+![AI-Driven Consulting Banner](https://github.com/Karthikeyan260/AiConsultingSystem/blob/main/ChatGPT%20Image%20May%205,%202025,%2010_48_45%20AM.png?raw=true)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a731616a-b485-43b2-85d3-1aa35b028bab/deploy-status)](https://app.netlify.com/sites/aiconsultingsystem/deploys)
 
