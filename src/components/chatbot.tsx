@@ -84,7 +84,7 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-semibold text-primary text-center mb-4">
-        <Image src={domainImage} alt={`${domain} Logo`} width={50} height={50} className="inline-block mr-2" />
+        <Image src="https://github.com/Karthikeyan260/AiConsultingSystem/blob/main/src/public/logo.png?raw=true" alt={`${domain} Logo`} width={50} height={50} className="inline-block mr-2" />
         {domain} Consulting
       </h1>
       <Card className="w-full max-w-2xl mx-auto">
