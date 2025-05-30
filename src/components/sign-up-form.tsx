@@ -4,12 +4,13 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {useState} from 'react';
-import {createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
 import {useToast} from '@/hooks/use-toast';
 import {useRouter} from 'next/navigation';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {supabase} from '@/lib/supabase';
 
 export function SignUpForm() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,13 +24,23 @@ export function SignUpForm() {
     setError(null);
 
     try {
-      const auth = getAuth();
-      await createUserWithEmailAndPassword(auth, email, password);
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+          },
+        },
+      });
+
+      if (error) throw error;
+
       toast({
         title: 'Sign up successful!',
-        description: 'You have successfully signed up.',
+        description: 'Please check your email to confirm your account.',
       });
-      router.push('/'); // Redirect to home page after successful sign-up
+      router.push('/sign-in'); // Redirect to sign-in page after successful sign-up
     } catch (err: any) {
       setError(err.message);
       toast({
@@ -42,6 +53,27 @@ export function SignUpForm() {
     }
   };
 
+  const handleGoogleSignUp = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
+        },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Google sign up failed!',
+        description: err.message,
+      });
+    }
+  };
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
@@ -50,12 +82,15 @@ export function SignUpForm() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="grid gap-4">
-           <div className="grid gap-2">
-            <Label htmlFor="name">Name</Label>
+          <div className="grid gap-2">
+            <Label htmlFor="name">Full Name</Label>
             <Input
               id="name"
-              placeholder="Your Name"
+              placeholder="John Doe"
               type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
             />
           </div>
           <div className="grid gap-2">
@@ -66,14 +101,7 @@ export function SignUpForm() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-            />
-          </div>
-           <div className="grid gap-2">
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              placeholder="Your Phone Number"
-              type="tel"
+              required
             />
           </div>
           <div className="grid gap-2">
@@ -83,6 +111,7 @@ export function SignUpForm() {
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
+              required
             />
           </div>
           <Button disabled={loading}>
@@ -90,9 +119,16 @@ export function SignUpForm() {
           </Button>
           {error && <p className="text-red-500 text-sm">{error}</p>}
         </form>
-           <p className="mt-4 text-sm text-muted-foreground">
-            Or sign up with Gmail
-          </p>
+        <div className="mt-4">
+          <p className="text-sm text-muted-foreground mb-2">Or sign up with</p>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={handleGoogleSignUp}
+          >
+            Google
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
