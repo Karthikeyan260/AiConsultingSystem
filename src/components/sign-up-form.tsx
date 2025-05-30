@@ -8,11 +8,13 @@ import {useToast} from '@/hooks/use-toast';
 import {useRouter} from 'next/navigation';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {supabase} from '@/lib/supabase';
+import Link from 'next/link';
 
 export function SignUpForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const {toast} = useToast();
@@ -24,23 +26,37 @@ export function SignUpForm() {
     setError(null);
 
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // First, sign up the user
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             full_name: name,
+            phone_number: phone,
           },
         },
       });
 
-      if (error) throw error;
+      if (signUpError) throw signUpError;
+
+      // Then, update the user's metadata to ensure phone number is stored
+      if (signUpData.user) {
+        const { error: updateError } = await supabase.auth.updateUser({
+          data: {
+            full_name: name,
+            phone_number: phone,
+          }
+        });
+
+        if (updateError) throw updateError;
+      }
 
       toast({
         title: 'Sign up successful!',
-        description: 'Please check your email to confirm your account.',
+        description: 'Welcome to AI Consulting System!',
       });
-      router.push('/sign-in'); // Redirect to sign-in page after successful sign-up
+      router.push('/'); // Redirect to home page after successful sign-up
     } catch (err: any) {
       setError(err.message);
       toast({
@@ -50,27 +66,6 @@ export function SignUpForm() {
       });
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleGoogleSignUp = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
-        },
-      });
-      if (error) throw error;
-    } catch (err: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Google sign up failed!',
-        description: err.message,
-      });
     }
   };
 
@@ -105,6 +100,17 @@ export function SignUpForm() {
             />
           </div>
           <div className="grid gap-2">
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input
+              id="phone"
+              placeholder="+1234567890"
+              type="tel"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              required
+            />
+          </div>
+          <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
@@ -119,15 +125,16 @@ export function SignUpForm() {
           </Button>
           {error && <p className="text-red-500 text-sm">{error}</p>}
         </form>
-        <div className="mt-4">
-          <p className="text-sm text-muted-foreground mb-2">Or sign up with</p>
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={handleGoogleSignUp}
-          >
-            Google
-          </Button>
+        <div className="mt-6 text-center">
+          <p className="text-sm text-muted-foreground">
+            Already have an account?{' '}
+            <Link 
+              href="/sign-in" 
+              className="text-primary hover:text-primary/80 font-medium underline-offset-4 hover:underline"
+            >
+              Sign in here
+            </Link>
+          </p>
         </div>
       </CardContent>
     </Card>

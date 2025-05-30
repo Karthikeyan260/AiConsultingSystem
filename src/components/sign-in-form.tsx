@@ -8,6 +8,7 @@ import {useToast} from '@/hooks/use-toast';
 import {useRouter} from 'next/navigation';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {supabase} from '@/lib/supabase';
+import Link from 'next/link';
 
 export function SignInForm() {
   const [email, setEmail] = useState('');
@@ -47,21 +48,6 @@ export function SignInForm() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-      });
-      if (error) throw error;
-    } catch (err: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Google sign in failed!',
-        description: err.message,
-      });
-    }
-  };
-
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
@@ -96,15 +82,16 @@ export function SignInForm() {
           </Button>
           {error && <p className="text-red-500 text-sm">{error}</p>}
         </form>
-        <div className="mt-4">
-          <p className="text-sm text-muted-foreground mb-2">Or sign in with</p>
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={handleGoogleSignIn}
-          >
-            Google
-          </Button>
+        <div className="mt-6 text-center">
+          <p className="text-sm text-muted-foreground">
+            Don't have an account?{' '}
+            <Link 
+              href="/sign-up" 
+              className="text-primary hover:text-primary/80 font-medium underline-offset-4 hover:underline"
+            >
+              Sign up here
+            </Link>
+          </p>
         </div>
       </CardContent>
     </Card>
