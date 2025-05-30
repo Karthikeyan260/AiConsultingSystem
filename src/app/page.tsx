@@ -18,10 +18,9 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import Logo from "@/components/logo"
-<<<<<<< HEAD
+
 import { AuthNav } from '@/components/auth-nav'
-=======
->>>>>>> fd1795c59ce09a105dfb25311ff747fa1d479d68
+
 
 export default function Home() {
   const router = useRouter()
@@ -102,9 +101,9 @@ export default function Home() {
               AI Consulting System
             </h1>
           </div>
-<<<<<<< HEAD
+
           <AuthNav />
-=======
+
           <div className="space-x-4">
             <Button
               variant="ghost"
@@ -120,7 +119,7 @@ export default function Home() {
               Sign Up
             </Button>
           </div>
->>>>>>> fd1795c59ce09a105dfb25311ff747fa1d479d68
+
         </div>
       </header>
 
@@ -386,7 +385,7 @@ export default function Home() {
           </div>
         </div>
       </motion.section>
-<<<<<<< HEAD
+
 
       {/* Author Info Section */}
       <section className="py-20 bg-gradient-to-b from-background/50 to-background">
@@ -445,7 +444,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-=======
+
 {/* Author Info Section */}
 <section className="py-20 bg-gradient-to-b from-background/50 to-background">
   <div className="container mx-auto px-4">
@@ -503,7 +502,7 @@ export default function Home() {
     </div>
   </div>
 </section>
->>>>>>> fd1795c59ce09a105dfb25311ff747fa1d479d68
+
 
       {/* Testimonials Section */}
       <section className="py-20 bg-gradient-to-b from-background to-background/80">
