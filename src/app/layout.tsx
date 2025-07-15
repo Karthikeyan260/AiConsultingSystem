@@ -1,18 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import "@/firebase/firebase" // Initialize Firebase
 
-const geistSans = Geist({
+// Using system fonts as fallback for sandboxed environment
+const geistSans = {
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-})
+}
 
-const geistMono = Geist_Mono({
+const geistMono = {
   variable: "--font-geist-mono",
-  subsets: ["latin"],
-})
+}
 
 export const metadata: Metadata = {
   title: "AI-Driven Consulting",

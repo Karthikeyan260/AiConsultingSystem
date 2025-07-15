@@ -6,6 +6,12 @@ body {
   font-family: system-ui, sans-serif;
 }
 
+/* Define font variables for fallback */
+:root {
+  --font-geist-sans: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  --font-geist-mono: "Menlo", "Monaco", "Courier New", monospace;
+}
+
 @layer base {
   :root {
     --background: 220 20% 98%;
