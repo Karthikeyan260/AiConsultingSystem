@@ -122,7 +122,7 @@ export default function Home() {
             className="inline-block mb-4"
           >
             <span className="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary">
-              <Sparkles className="mr-1 h-4 w-4" /> AI-Powered Solutions
+              <Sparkles className="mr-1 h-4 w-4" /> 👋 Hi! Welcome to AI-Powered Solutions
             </span>
           </motion.div>
           <motion.h1
@@ -140,7 +140,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Empowering businesses with cutting-edge AI-driven consulting solutions that deliver measurable results and
+            👋 Hi there! We're here to empower your business with cutting-edge AI-driven consulting solutions that deliver measurable results and
             strategic advantages.
           </motion.p>
           <motion.div
