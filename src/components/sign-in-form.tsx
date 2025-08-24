@@ -7,7 +7,7 @@ import {useState} from 'react';
 import {useToast} from '@/hooks/use-toast';
 import {useRouter} from 'next/navigation';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {supabase} from '@/lib/supabase';
+import {signIn} from '@/services/authentication';
 import Link from 'next/link';
 
 export function SignInForm() {
@@ -24,16 +24,11 @@ export function SignInForm() {
     setError(null);
 
     try {
-      if (!supabase) {
-        throw new Error('Authentication service is not configured. Please check your environment settings.');
+      const result = await signIn(email, password);
+
+      if (!result.success) {
+        throw new Error(result.error || 'Sign in failed');
       }
-
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) throw error;
 
       toast({
         title: 'Sign in successful!',

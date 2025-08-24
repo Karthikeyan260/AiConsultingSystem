@@ -7,7 +7,7 @@ import {useState} from 'react';
 import {useToast} from '@/hooks/use-toast';
 import {useRouter} from 'next/navigation';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {supabase} from '@/lib/supabase';
+import {signUp} from '@/services/authentication';
 import Link from 'next/link';
 
 export function SignUpForm() {
@@ -26,34 +26,10 @@ export function SignUpForm() {
     setError(null);
 
     try {
-      if (!supabase) {
-        throw new Error('Authentication service is not configured. Please check your environment settings.');
-      }
+      const result = await signUp(email, password, name, phone);
 
-      // First, sign up the user
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: name,
-            phone_number: phone,
-          },
-        },
-      });
-
-      if (signUpError) throw signUpError;
-
-      // Then, update the user's metadata to ensure phone number is stored
-      if (signUpData.user) {
-        const { error: updateError } = await supabase.auth.updateUser({
-          data: {
-            full_name: name,
-            phone_number: phone,
-          }
-        });
-
-        if (updateError) throw updateError;
+      if (!result.success) {
+        throw new Error(result.error || 'Sign up failed');
       }
 
       toast({
