@@ -1,6 +1,6 @@
 # 🧠 AI Consulting System
 
-![AI Consulting System Banner](https://github.com/Karthikeyan260/AiConsultingSystem/blob/main/ChatGPT%20Image%20May%205,%202025,%2010_48_45%20AM.png?raw=true)
+![AI Consulting System Banner](https://github.com/Karthikeyan260/AiConsultingSystem/blob/main/ai-consulting-system-banner.png?raw=true)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a731616a-b485-43b2-85d3-1aa35b028bab/deploy-status)](https://app.netlify.com/sites/aiconsultingsystem/deploys)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
