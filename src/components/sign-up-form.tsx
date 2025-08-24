@@ -26,6 +26,10 @@ export function SignUpForm() {
     setError(null);
 
     try {
+      if (!supabase) {
+        throw new Error('Authentication service is not configured. Please check your environment settings.');
+      }
+
       // First, sign up the user
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,

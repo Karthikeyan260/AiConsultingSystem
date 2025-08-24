@@ -24,6 +24,10 @@ export function SignInForm() {
     setError(null);
 
     try {
+      if (!supabase) {
+        throw new Error('Authentication service is not configured. Please check your environment settings.');
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
