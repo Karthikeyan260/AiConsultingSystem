@@ -3,39 +3,31 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-import { User } from '@supabase/supabase-js';
+import { getCurrentUser, signOut, UserSession } from '@/services/authentication';
 
 export function AuthNav() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserSession | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    if (!supabase) {
-      setLoading(false);
-      return;
-    }
+    // Get initial user session
+    const currentUser = getCurrentUser();
+    setUser(currentUser);
+    setLoading(false);
 
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    // Set up interval to check for authentication changes
+    const checkAuthInterval = setInterval(() => {
+      const currentUser = getCurrentUser();
+      setUser(currentUser);
+    }, 1000); // Check every second
 
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
+    return () => clearInterval(checkAuthInterval);
   }, []);
 
   const handleSignOut = async () => {
-    if (!supabase) return;
-    await supabase.auth.signOut();
+    signOut();
+    setUser(null);
     router.push('/');
   };
 
@@ -47,7 +39,7 @@ export function AuthNav() {
     return (
       <div className="flex items-center gap-4">
         <span className="text-sm">
-          Welcome, {user.user_metadata.full_name || user.email}
+          Welcome, {user.fullName || user.email}
         </span>
         <Button
           variant="ghost"
