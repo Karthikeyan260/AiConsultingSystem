@@ -1,8 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
-import "@/firebase/firebase" // Initialize Firebase
 import { Toaster } from "@/components/ui/toaster"
+import { FirebaseProvider } from "@/components/firebase-provider"
 
 // Using system fonts as fallback for sandboxed environment
 const geistSans = {
@@ -29,8 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
-        <Toaster />
+        <FirebaseProvider>
+          {children}
+          <Toaster />
+        </FirebaseProvider>
       </body>
     </html>
   )
