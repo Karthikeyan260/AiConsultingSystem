@@ -1,6 +1,5 @@
 'use client';
 
-import {adaptResponseToNeed} from '@/ai/flows/adapt-response-to-need';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {Textarea} from '@/components/ui/textarea';
@@ -20,12 +19,31 @@ interface ChatbotProps {
 }
 
 async function getResponse(domain: string, query: string) {
-  const response = await adaptResponseToNeed({
-    domain: domain,
-    query: query,
-    userNeed: 'General Consulting', // Default user need
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      domain: domain,
+      query: query,
+      userNeed: 'General Consulting', // Default user need
+    }),
   });
-  return response.adaptedResponse;
+
+  if (!response.ok) {
+    let errorMessage = 'Failed to generate response';
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.error || errorMessage;
+    } catch {
+      // If JSON parsing fails, use the default error message
+    }
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+  return data.adaptedResponse;
 }
 
 function getWelcomeMessage(domain: string): string {
