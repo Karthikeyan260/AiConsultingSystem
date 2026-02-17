@@ -18,7 +18,7 @@
 - 🏠 **Modern Homepage** - Clean, responsive design with smooth animations
 - 🔐 **Secure Authentication** - Powered by Clerk for seamless user management
 - 🎯 **Four Expert Domains** - Specialized AI consultants for Education, Healthcare, Finance, and Retail
-- 🤖 **AI-Powered Chatbots** - Domain-specific intelligent assistants using Google Gemini 2.0 Flash
+- 🤖 **AI-Powered Chatbots** - Domain-specific intelligent assistants using Google Gemini 2.5 Flash
 - 💾 **Data Persistence** - Firebase integration for real-time data storage
 - 📱 **Responsive Design** - Optimized for desktop, tablet, and mobile devices
 - 🎨 **Modern UI/UX** - Built with Radix UI components and Tailwind CSS
@@ -36,7 +36,7 @@
 - **[React Hook Form](https://react-hook-form.com/)** - Form validation
 
 ### Backend & AI
-- **[Google Gemini AI](https://ai.google.dev/)** - Advanced AI model (Gemini 2.0 Flash)
+- **[Google Gemini AI](https://ai.google.dev/)** - Advanced AI model (Gemini 2.5 Flash)
 - **[Genkit](https://firebase.google.com/docs/genkit)** - AI development framework
 - **[Firebase](https://firebase.google.com/)** - Backend-as-a-Service
 - **[Clerk](https://clerk.com/)** - Authentication and user management
