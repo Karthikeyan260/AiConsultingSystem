@@ -32,8 +32,14 @@ async function getResponse(domain: string, query: string) {
   });
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || 'Failed to generate response');
+    let errorMessage = 'Failed to generate response';
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.error || errorMessage;
+    } catch {
+      // If JSON parsing fails, use the default error message
+    }
+    throw new Error(errorMessage);
   }
 
   const data = await response.json();
