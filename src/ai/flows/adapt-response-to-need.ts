@@ -8,12 +8,14 @@
  */
 
 import {ai} from '@/ai/ai-instance';
+import {DEFAULT_GEMINI_MODEL} from '@/lib/gemini-models';
 import {z} from 'genkit';
 
 const AdaptResponseToNeedInputSchema = z.object({
   domain: z.enum(['Education', 'Healthcare', 'Finance', 'Retail']).describe('The domain of the user query.'),
   userNeed: z.string().describe('The specific need of the user.'),
   query: z.string().describe('The user query.'),
+  model: z.string().optional().describe('The Gemini model to use for the response.'),
 });
 export type AdaptResponseToNeedInput = z.infer<typeof AdaptResponseToNeedInputSchema>;
 
@@ -58,7 +60,8 @@ const adaptResponseToNeedFlow = ai.defineFlow<
   inputSchema: AdaptResponseToNeedInputSchema,
   outputSchema: AdaptResponseToNeedOutputSchema,
 }, async input => {
-  const {output} = await prompt(input);
+  const {model, ...promptInput} = input;
+  const {output} = await prompt(promptInput, {model: model ?? DEFAULT_GEMINI_MODEL});
   return output!;
 });
 

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { domain, query, userNeed } = body;
+    const { domain, query, userNeed, model } = body;
 
     // Validate required parameters
     if (!domain || !query || !userNeed) {
@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
       domain,
       query,
       userNeed,
+      model,
     });
 
     // Return the adapted response
