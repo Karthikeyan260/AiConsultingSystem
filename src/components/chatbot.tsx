@@ -2,11 +2,13 @@
 
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Textarea} from '@/components/ui/textarea';
 import {useState, useRef, useEffect} from 'react';
 import {useToast} from '@/hooks/use-toast';
 import {ScrollArea} from "@/components/ui/scroll-area";
 import Image from 'next/image';
+import {GEMINI_MODELS, DEFAULT_GEMINI_MODEL} from '@/lib/gemini-models';
 
 interface ChatMessage {
   text: string;
@@ -18,7 +20,7 @@ interface ChatbotProps {
   domainImage: string;
 }
 
-async function getResponse(domain: string, query: string) {
+async function getResponse(domain: string, query: string, model: string) {
   const response = await fetch('/api/chat', {
     method: 'POST',
     headers: {
@@ -28,6 +30,7 @@ async function getResponse(domain: string, query: string) {
       domain: domain,
       query: query,
       userNeed: 'General Consulting', // Default user need
+      model: model,
     }),
   });
 
@@ -94,6 +97,7 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [selectedModel, setSelectedModel] = useState(DEFAULT_GEMINI_MODEL);
   const {toast} = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -116,7 +120,7 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
     setQuery('');
 
     try {
-      const botResponse = await getResponse(domain, query);
+      const botResponse = await getResponse(domain, query, selectedModel);
       const botMessage = { text: botResponse, isUser: false };
       setMessages(prevMessages => [...prevMessages, botMessage]);
       toast({
@@ -164,6 +168,28 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Ask me anything about {domain}!</CardTitle>
+          <div className="flex items-center gap-2 mt-2">
+            <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+              Gemini Model:
+            </label>
+            <Select value={selectedModel} onValueChange={setSelectedModel}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a Gemini model" />
+              </SelectTrigger>
+              <SelectContent>
+                {GEMINI_MODELS.map((m) => (
+                  <SelectItem
+                    key={m.id}
+                    value={m.id}
+                    aria-label={`${m.label}: ${m.description}`}
+                  >
+                    <span className="font-medium">{m.label}</span>
+                    <span className="ml-2 text-xs text-muted-foreground">{m.description}</span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </CardHeader>
         <CardContent className="flex flex-col">
           <ScrollArea className="h-[400px] mb-4">
