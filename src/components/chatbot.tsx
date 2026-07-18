@@ -6,7 +6,6 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Textarea} from '@/components/ui/textarea';
 import {useState, useRef, useEffect} from 'react';
 import {useToast} from '@/hooks/use-toast';
-import {ScrollArea} from "@/components/ui/scroll-area";
 import Image from 'next/image';
 import {GEMINI_MODELS, DEFAULT_GEMINI_MODEL} from '@/lib/gemini-models';
 
@@ -197,27 +196,25 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
             </div>
           </CardHeader>
           
-          <CardContent className="flex flex-col gap-4">
-            <ScrollArea className="h-[400px] border border-border rounded-lg p-4 bg-background">
-              <div className="flex flex-col space-y-3">
-                {messages.map((message, index) => (
-                  <div
-                    key={index}
-                    className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                        message.isUser
-                          ? 'bg-primary text-primary-foreground rounded-br-none'
-                          : 'bg-secondary text-foreground rounded-bl-none border border-border'
-                      }`}
-                    >
-                      <p className="text-sm leading-relaxed">{message.text}</p>
-                    </div>
-                  </div>
-                ))}
+        <CardContent className="flex flex-col gap-4">
+          <div className="h-96 border border-border rounded-lg p-4 bg-background overflow-y-auto flex flex-col gap-3">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                    message.isUser
+                      ? 'bg-primary text-primary-foreground rounded-br-none'
+                      : 'bg-secondary text-foreground rounded-bl-none border border-border'
+                  }`}
+                >
+                  <p className="text-sm leading-relaxed">{message.text}</p>
+                </div>
               </div>
-            </ScrollArea>
+            ))}
+          </div>
             
             {showSuggestions && (
               <div className="bg-secondary p-4 rounded-lg border border-border">
