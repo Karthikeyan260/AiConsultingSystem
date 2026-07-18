@@ -16,7 +16,6 @@ import {
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
 import Logo from "@/components/logo"
 
 import { AuthNav } from '@/components/auth-nav'
@@ -55,15 +54,7 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [testimonials.length])
 
-  const { ref: featuresRef, inView: featuresInView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
 
-  const { ref: domainsRef, inView: domainsInView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
 
   if (!isMounted) {
     return null
@@ -169,11 +160,10 @@ export default function Home() {
 
       {/* Features Section */}
       <motion.section
-        ref={featuresRef}
         className="py-20 bg-background"
         variants={containerVariants}
         initial="hidden"
-        animate={featuresInView ? "visible" : "hidden"}
+        animate="visible"
       >
         <div className="container mx-auto px-4">
           <motion.div variants={itemVariants} className="text-center mb-16">
@@ -230,11 +220,10 @@ export default function Home() {
 
       {/* Domain Cards */}
       <motion.section
-        ref={domainsRef}
         className="py-20"
         variants={containerVariants}
         initial="hidden"
-        animate={domainsInView ? "visible" : "hidden"}
+        animate="visible"
       >
         <div className="container mx-auto px-4">
           <motion.div variants={itemVariants} className="text-center mb-16">
