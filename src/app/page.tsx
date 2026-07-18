@@ -91,13 +91,13 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
+    <div className="min-h-screen bg-background">
       {/* Navbar */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b">
-        <div className="container mx-auto flex justify-between items-center py-4">
-          <div className="flex items-center gap-2">
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-background/95 border-b border-border">
+        <div className="container mx-auto flex justify-between items-center py-4 px-4">
+          <div className="flex items-center gap-3">
             <Logo className="h-10 w-10" />
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold text-primary">
               AI Consulting System
             </h1>
           </div>
@@ -107,8 +107,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-blue-500/20 to-teal-400/20 animate-gradient-shift"></div>
+      <section className="relative overflow-hidden py-20 md:py-32 bg-gradient-to-b from-background to-secondary">
         <motion.div
           className="container mx-auto px-4 text-center relative z-10"
           initial={{ opacity: 0, y: 20 }}
@@ -119,29 +118,28 @@ export default function Home() {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="inline-block mb-4"
+            className="inline-block mb-6"
           >
-            <span className="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary">
-              <Sparkles className="mr-1 h-4 w-4" /> 👋 Hi! Welcome to AI-Powered Solutions
+            <span className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-full bg-accent/10 text-accent border border-accent/20">
+              <Sparkles className="mr-2 h-4 w-4" />
+              Welcome to AI-Powered Solutions
             </span>
           </motion.div>
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-blue-500 to-teal-400 bg-clip-text text-transparent"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-foreground text-balance"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Transforming Business <br className="hidden md:block" />
-            With AI Consulting
+            Transforming Business With AI Consulting
           </motion.h1>
           <motion.p
-            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-muted-foreground"
+            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-muted-foreground leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            👋 Hi there! We're here to empower your business with cutting-edge AI-driven consulting solutions that deliver measurable results and
-            strategic advantages.
+            Empower your business with cutting-edge AI-driven consulting solutions that deliver measurable results and strategic advantages.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -151,87 +149,78 @@ export default function Home() {
           >
             <Button
               size="lg"
-              className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
               onClick={() => router.push("/get-started")}
             >
-              Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              Get Started
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="border-primary/20 hover:bg-primary/10"
+              className="border-border hover:bg-secondary"
               onClick={() => router.push("/learn-more")}
             >
               Learn More
             </Button>
           </motion.div>
         </motion.div>
-
-        {/* Animated background elements */}
-        <div className="absolute top-1/4 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div
-          className="absolute bottom-1/4 right-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        ></div>
       </section>
 
       {/* Features Section */}
       <motion.section
         ref={featuresRef}
-        className="py-20 bg-gradient-to-b from-background/50 to-background"
+        className="py-20 bg-background"
         variants={containerVariants}
         initial="hidden"
         animate={featuresInView ? "visible" : "hidden"}
       >
         <div className="container mx-auto px-4">
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
               Why Choose Us?
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our AI consulting services are designed to give your business the competitive edge it needs in today's
-              digital landscape.
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Our AI consulting services are designed to give your business the competitive edge it needs in today&apos;s digital landscape.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <motion.div
               variants={itemVariants}
-              className="bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-300 transform hover:-translate-y-1"
+              className="bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30 transition-all duration-300"
             >
-              <div className="h-14 w-14 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white mb-6">
-                <Globe className="h-7 w-7" />
+              <div className="h-12 w-12 rounded-lg bg-primary flex items-center justify-center text-primary-foreground mb-6">
+                <Globe className="h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-xl mb-3">Global Reach</h3>
-              <p className="text-muted-foreground">
-                Our AI solutions are tailored for businesses worldwide, with expertise in regional markets and global
-                trends.
+              <h3 className="font-semibold text-lg mb-3 text-foreground">Global Reach</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Our AI solutions are tailored for businesses worldwide, with expertise in regional markets and global trends.
               </p>
             </motion.div>
 
             <motion.div
               variants={itemVariants}
-              className="bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-300 transform hover:-translate-y-1"
+              className="bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30 transition-all duration-300"
             >
-              <div className="h-14 w-14 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white mb-6">
-                <Users className="h-7 w-7" />
+              <div className="h-12 w-12 rounded-lg bg-accent flex items-center justify-center text-accent-foreground mb-6">
+                <Users className="h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-xl mb-3">Expert Team</h3>
-              <p className="text-muted-foreground">
-                Work with industry-leading AI experts who bring decades of combined experience to solve your business
-                challenges.
+              <h3 className="font-semibold text-lg mb-3 text-foreground">Expert Team</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Work with industry-leading AI experts who bring decades of combined experience to solve your business challenges.
               </p>
             </motion.div>
 
             <motion.div
               variants={itemVariants}
-              className="bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-300 transform hover:-translate-y-1"
+              className="bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30 transition-all duration-300"
             >
-              <div className="h-14 w-14 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center text-white mb-6">
-                <Star className="h-7 w-7" />
+              <div className="h-12 w-12 rounded-lg bg-primary/60 flex items-center justify-center text-primary-foreground mb-6">
+                <Star className="h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-xl mb-3">Proven Results</h3>
-              <p className="text-muted-foreground">
+              <h3 className="font-semibold text-lg mb-3 text-foreground">Proven Results</h3>
+              <p className="text-muted-foreground leading-relaxed">
                 Delivering measurable success for our clients with data-driven strategies and implementation support.
               </p>
             </motion.div>
@@ -249,10 +238,10 @@ export default function Home() {
       >
         <div className="container mx-auto px-4">
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
               Explore Our Domains
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Specialized AI consulting services across multiple industries to address your specific needs.
             </p>
           </motion.div>
@@ -260,26 +249,26 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <motion.div variants={itemVariants}>
               <Card
-                className="h-full overflow-hidden group hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/30 cursor-pointer"
+                className="h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/30 cursor-pointer"
                 onClick={() => router.push("/domains/education")}
               >
-                <div className="h-2 bg-gradient-to-r from-blue-400 to-blue-600"></div>
+                <div className="h-1 bg-primary"></div>
                 <CardHeader>
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/40 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
                       <Section className="h-5 w-5" />
                     </div>
-                    <CardTitle>Education</CardTitle>
+                    <CardTitle className="text-lg">Education</CardTitle>
                   </div>
-                  <CardDescription>AI consulting for the education sector</CardDescription>
+                  <CardDescription className="mt-2">AI consulting for education sector</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Explore innovative teaching methods, personalized learning platforms, and effective educational
-                    strategies powered by AI.
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Explore innovative teaching methods, personalized learning platforms, and effective educational strategies powered by AI.
                   </p>
-                  <div className="mt-4 flex items-center text-blue-600 dark:text-blue-400 font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more <ArrowRight className="ml-1 h-4 w-4" />
+                  <div className="mt-4 flex items-center text-primary font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    Learn more
+                    <ArrowRight className="ml-1 h-4 w-4" />
                   </div>
                 </CardContent>
               </Card>
@@ -287,26 +276,26 @@ export default function Home() {
 
             <motion.div variants={itemVariants}>
               <Card
-                className="h-full overflow-hidden group hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/30 cursor-pointer"
+                className="h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/30 cursor-pointer"
                 onClick={() => router.push("/domains/healthcare")}
               >
-                <div className="h-2 bg-gradient-to-r from-red-400 to-red-600"></div>
+                <div className="h-1 bg-primary"></div>
                 <CardHeader>
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 group-hover:bg-red-200 dark:group-hover:bg-red-800/40 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
                       <Heart className="h-5 w-5" />
                     </div>
-                    <CardTitle>Healthcare</CardTitle>
+                    <CardTitle className="text-lg">Healthcare</CardTitle>
                   </div>
-                  <CardDescription>AI consulting for the healthcare sector</CardDescription>
+                  <CardDescription className="mt-2">AI consulting for healthcare sector</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Optimize patient care, improve diagnostic accuracy, and explore advancements in medical treatments
-                    through AI.
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Optimize patient care, improve diagnostic accuracy, and explore advancements in medical treatments through AI.
                   </p>
-                  <div className="mt-4 flex items-center text-red-600 dark:text-red-400 font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more <ArrowRight className="ml-1 h-4 w-4" />
+                  <div className="mt-4 flex items-center text-primary font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    Learn more
+                    <ArrowRight className="ml-1 h-4 w-4" />
                   </div>
                 </CardContent>
               </Card>
@@ -314,26 +303,26 @@ export default function Home() {
 
             <motion.div variants={itemVariants}>
               <Card
-                className="h-full overflow-hidden group hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/30 cursor-pointer"
+                className="h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/30 cursor-pointer"
                 onClick={() => router.push("/domains/finance")}
               >
-                <div className="h-2 bg-gradient-to-r from-green-400 to-green-600"></div>
+                <div className="h-1 bg-accent"></div>
                 <CardHeader>
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 group-hover:bg-green-200 dark:group-hover:bg-green-800/40 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover:bg-accent/20 transition-colors">
                       <Currency className="h-5 w-5" />
                     </div>
-                    <CardTitle>Finance</CardTitle>
+                    <CardTitle className="text-lg">Finance</CardTitle>
                   </div>
-                  <CardDescription>AI consulting for the finance sector</CardDescription>
+                  <CardDescription className="mt-2">AI consulting for finance sector</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Make informed investment decisions, detect fraud, and navigate complex financial landscapes with
-                    AI-powered insights.
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Make informed investment decisions, detect fraud, and navigate complex financial landscapes with AI-powered insights.
                   </p>
-                  <div className="mt-4 flex items-center text-green-600 dark:text-green-400 font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more <ArrowRight className="ml-1 h-4 w-4" />
+                  <div className="mt-4 flex items-center text-accent font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    Learn more
+                    <ArrowRight className="ml-1 h-4 w-4" />
                   </div>
                 </CardContent>
               </Card>
@@ -341,26 +330,26 @@ export default function Home() {
 
             <motion.div variants={itemVariants}>
               <Card
-                className="h-full overflow-hidden group hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/30 cursor-pointer"
+                className="h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/30 cursor-pointer"
                 onClick={() => router.push("/domains/retail")}
               >
-                <div className="h-2 bg-gradient-to-r from-purple-400 to-purple-600"></div>
+                <div className="h-1 bg-accent"></div>
                 <CardHeader>
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 group-hover:bg-purple-200 dark:group-hover:bg-purple-800/40 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover:bg-accent/20 transition-colors">
                       <ShoppingCart className="h-5 w-5" />
                     </div>
-                    <CardTitle>Retail</CardTitle>
+                    <CardTitle className="text-lg">Retail</CardTitle>
                   </div>
-                  <CardDescription>AI consulting for the retail sector</CardDescription>
+                  <CardDescription className="mt-2">AI consulting for retail sector</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Enhance customer experience, optimize inventory management, and streamline retail operations with AI
-                    solutions.
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Enhance customer experience, optimize inventory management, and streamline retail operations with AI solutions.
                   </p>
-                  <div className="mt-4 flex items-center text-purple-600 dark:text-purple-400 font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more <ArrowRight className="ml-1 h-4 w-4" />
+                  <div className="mt-4 flex items-center text-accent font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    Learn more
+                    <ArrowRight className="ml-1 h-4 w-4" />
                   </div>
                 </CardContent>
               </Card>
@@ -370,72 +359,71 @@ export default function Home() {
       </motion.section>
 
 {/* Author Info Section */}
-<section className="py-20 bg-gradient-to-b from-background/50 to-background">
+<section className="py-20 bg-secondary">
   <div className="container mx-auto px-4">
     <div className="text-center mb-16">
-      <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+      <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
         Meet Our Team
       </h2>
-      <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+      <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
         Our team of AI experts brings years of experience and innovation to help your business succeed.
       </p>
     </div>
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {/* Author 1 */}
-      <div className="text-center bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg transition-all duration-300">
+      <div className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg transition-all duration-300">
         <img
           src="https://avatars.githubusercontent.com/u/140727545?v=4"
-          alt="Author 1"
-          className="w-24 h-24 mx-auto rounded-full mb-4"
+          alt="Karthikeyan"
+          className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
         />
-        <h3 className="font-semibold text-xl mb-2">Karthikeyan</h3>
-        <p className="text-sm text-muted-foreground mb-4">FullStack Developer</p>
-        <p className="text-muted-foreground">
+        <h3 className="font-semibold text-lg mb-2 text-foreground">Karthikeyan</h3>
+        <p className="text-sm text-muted-foreground mb-3">FullStack Developer</p>
+        <p className="text-sm text-muted-foreground leading-relaxed">
           Karthikeyan specializes in AI strategy and implementation, helping businesses achieve their goals with cutting-edge solutions.
         </p>
       </div>
 
       {/* Author 2 */}
-      <div className="text-center bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg transition-all duration-300">
+      <div className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg transition-all duration-300">
         <img
           src="https://avatars.githubusercontent.com/u/142210572?v=4"
-          alt="Author 2"
-          className="w-24 h-24 mx-auto rounded-full mb-4"
+          alt="Gokul"
+          className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
         />
-        <h3 className="font-semibold text-xl mb-2">Gokul </h3>
-        <p className="text-sm text-muted-foreground mb-4">Data Scientist</p>
-        <p className="text-muted-foreground">
+        <h3 className="font-semibold text-lg mb-2 text-foreground">Gokul</h3>
+        <p className="text-sm text-muted-foreground mb-3">Data Scientist</p>
+        <p className="text-sm text-muted-foreground leading-relaxed">
           Gokul has over a decade of experience in data analytics and machine learning, delivering actionable insights for clients.
         </p>
       </div>
 
       {/* Author 3 */}
-      <div className="text-center bg-card/50 backdrop-blur-sm p-8 rounded-xl border border-border/50 hover:shadow-lg transition-all duration-300">
+      <div className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg transition-all duration-300">
         <img
           src="https://raw.githubusercontent.com/Karthikeyan260/memory-game/refs/heads/main/5.png"
-          alt="Author 3"
-          className="w-24 h-24 mx-auto rounded-full mb-4"
+          alt="Murugadass"
+          className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
         />
-        <h3 className="font-semibold text-xl mb-2"> Murugadass</h3>
-        <p className="text-sm text-muted-foreground mb-4">UI&UX Designer</p>
-        <p className="text-muted-foreground">
-        Murugadass designs and implements AI-driven solutions tailored to meet the unique needs of businesses across industries.
+        <h3 className="font-semibold text-lg mb-2 text-foreground">Murugadass</h3>
+        <p className="text-sm text-muted-foreground mb-3">UI/UX Designer</p>
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Murugadass designs and implements AI-driven solutions tailored to meet the unique needs of businesses across industries.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-
       {/* Testimonials Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-background/80">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
               What Our Clients Say
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Hear from businesses that have transformed their operations with our AI consulting services.
             </p>
           </div>

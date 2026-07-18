@@ -29,7 +29,7 @@ async function getResponse(domain: string, query: string, model: string) {
     body: JSON.stringify({
       domain: domain,
       query: query,
-      userNeed: 'General Consulting', // Default user need
+      userNeed: 'General Consulting',
       model: model,
     }),
   });
@@ -51,14 +51,14 @@ async function getResponse(domain: string, query: string, model: string) {
 
 function getWelcomeMessage(domain: string): string {
   const welcomeMessages = {
-    Education: "👋 Hi there! Welcome to our Education Consulting service! I'm here to help you with educational strategies, learning methodologies, curriculum development, and any questions about the education sector. How can I assist you today?",
-    Healthcare: "👋 Hello! Welcome to our Healthcare Consulting service! I'm specialized in healthcare management, medical technologies, patient care optimization, and healthcare industry insights. What would you like to know about healthcare?",
-    Finance: "👋 Hi! Welcome to our Finance Consulting service! I can help you with investment strategies, financial planning, market analysis, risk management, and all things finance-related. What financial topic would you like to explore?",
-    Retail: "👋 Hello there! Welcome to our Retail Consulting service! I'm here to assist with retail strategies, customer experience, inventory management, market trends, and retail operations. How can I help optimize your retail business?"
+    Education: "Hi there! Welcome to our Education Consulting service! I'm here to help you with educational strategies, learning methodologies, curriculum development, and any questions about the education sector. How can I assist you today?",
+    Healthcare: "Hello! Welcome to our Healthcare Consulting service! I'm specialized in healthcare management, medical technologies, patient care optimization, and healthcare industry insights. What would you like to know about healthcare?",
+    Finance: "Hi! Welcome to our Finance Consulting service! I can help you with investment strategies, financial planning, market analysis, risk management, and all things finance-related. What financial topic would you like to explore?",
+    Retail: "Hello there! Welcome to our Retail Consulting service! I'm here to assist with retail strategies, customer experience, inventory management, market trends, and retail operations. How can I help optimize your retail business?"
   };
   
   return welcomeMessages[domain as keyof typeof welcomeMessages] || 
-    `👋 Hi! Welcome to our ${domain} Consulting service! I'm here to help you with any questions or guidance you need in this domain. How can I assist you today?`;
+    `Hi! Welcome to our ${domain} Consulting service! I'm here to help you with any questions or guidance you need in this domain. How can I assist you today?`;
 }
 
 function getSuggestedQuestions(domain: string): string[] {
@@ -102,10 +102,7 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    // Focus the textarea when the component mounts
     textareaRef.current?.focus();
-    
-    // Add welcome message when component mounts
     const welcomeMessage = getWelcomeMessage(domain);
     setMessages([{ text: welcomeMessage, isUser: false }]);
   }, [domain]);
@@ -114,7 +111,7 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
     if (!query.trim()) return;
 
     setIsLoading(true);
-    setShowSuggestions(false); // Hide suggestions after first message
+    setShowSuggestions(false);
     const userMessage = { text: query, isUser: true };
     setMessages(prevMessages => [...prevMessages, userMessage]);
     setQuery('');
@@ -160,111 +157,106 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-semibold text-primary text-center mb-4">
-        <Image src="https://github.com/Karthikeyan260/AiConsultingSystem/blob/main/src/public/logo.png?raw=true" alt={`${domain} Logo`} width={50} height={50} className="inline-block mr-2" />
-        {domain} Consulting
-      </h1>
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle>Ask me anything about {domain}!</CardTitle>
-          <div className="flex items-center gap-2 mt-2">
-            <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
-              Gemini Model:
-            </label>
-            <Select value={selectedModel} onValueChange={setSelectedModel}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a Gemini model" />
-              </SelectTrigger>
-              <SelectContent>
-                {GEMINI_MODELS.map((m) => (
-                  <SelectItem
-                    key={m.id}
-                    value={m.id}
-                    aria-label={`${m.label}: ${m.description}`}
-                  >
-                    <span className="font-medium">{m.label}</span>
-                    <span className="ml-2 text-xs text-muted-foreground">{m.description}</span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </CardHeader>
-        <CardContent className="flex flex-col">
-          <ScrollArea className="h-[400px] mb-4">
-            <div className="flex flex-col space-y-2">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`chat-message ${message.isUser ? 'user-message' : 'bot-message'}`}
-                >
-                  <div className="message-content">
-                    {message.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
-          
-          {/* Suggested Questions */}
-          {showSuggestions && (
-            <div className="mb-4">
-              <p className="text-sm font-medium text-muted-foreground mb-2">💡 Try asking:</p>
-              <div className="flex flex-col gap-2">
-                {getSuggestedQuestions(domain).map((suggestion, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleSuggestionClick(suggestion)}
-                    className="text-left p-2 text-sm bg-secondary hover:bg-secondary/80 rounded-md transition-colors border border-border/50 hover:border-primary/30"
-                  >
-                    {suggestion}
-                  </button>
-                ))}
+    <div className="min-h-screen bg-background py-8">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+            {domain} Consulting
+          </h1>
+          <p className="text-muted-foreground">Ask anything about {domain}</p>
+        </div>
+        
+        <Card className="w-full max-w-2xl mx-auto border border-border">
+          <CardHeader className="bg-secondary border-b border-border">
+            <CardTitle className="text-foreground">AI Consulting Assistant</CardTitle>
+            <div className="flex flex-col gap-3 mt-4">
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Select Model
+                </label>
+                <Select value={selectedModel} onValueChange={setSelectedModel}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Choose a model" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {GEMINI_MODELS.map((m) => (
+                      <SelectItem
+                        key={m.id}
+                        value={m.id}
+                        aria-label={`${m.label}: ${m.description}`}
+                      >
+                        <div className="flex flex-col">
+                          <span className="font-medium">{m.label}</span>
+                          <span className="text-xs text-muted-foreground">{m.description}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
-          )}
+          </CardHeader>
           
-          <form onSubmit={handleSubmit} className="flex space-x-2">
-            <Textarea
-              ref={textareaRef}
-              placeholder={`Enter your question about ${domain} here...`}
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              rows={1}
-              className="flex-grow rounded-md border shadow-sm focus:ring-primary focus:border-primary"
-            />
-            <Button type="submit" disabled={isLoading} onClick={handleSubmit}>
-              {isLoading ? 'Generating...' : 'Send'}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-      <style jsx>{`
-        .chat-message {
-          display: flex;
-          margin-bottom: 8px;
-        }
-        .user-message {
-          justify-content: flex-end;
-        }
-        .bot-message {
-          justify-content: flex-start;
-        }
-        .message-content {
-          max-width: 80%;
-          padding: 10px 15px;
-          border-radius: 20px;
-          color: white;
-        }
-        .user-message .message-content {
-          background-color: #3498db; /* Blue for user messages */
-        }
-        .bot-message .message-content {
-          background-color: #2ecc71; /* Green for bot messages */
-        }
-      `}</style>
+          <CardContent className="flex flex-col gap-4">
+            <ScrollArea className="h-[400px] border border-border rounded-lg p-4 bg-background">
+              <div className="flex flex-col space-y-3">
+                {messages.map((message, index) => (
+                  <div
+                    key={index}
+                    className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                        message.isUser
+                          ? 'bg-primary text-primary-foreground rounded-br-none'
+                          : 'bg-secondary text-foreground rounded-bl-none border border-border'
+                      }`}
+                    >
+                      <p className="text-sm leading-relaxed">{message.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+            
+            {showSuggestions && (
+              <div className="bg-secondary p-4 rounded-lg border border-border">
+                <p className="text-sm font-medium text-foreground mb-3">Suggested Questions</p>
+                <div className="flex flex-col gap-2">
+                  {getSuggestedQuestions(domain).map((suggestion, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className="text-left p-3 text-sm bg-card hover:bg-card/80 rounded-lg transition-colors border border-border hover:border-primary/50 text-foreground"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            <form onSubmit={handleSubmit} className="flex gap-2">
+              <Textarea
+                ref={textareaRef}
+                placeholder={`Ask about ${domain}...`}
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
+                rows={1}
+                className="flex-grow rounded-lg border border-border focus:ring-primary focus:border-primary resize-none"
+              />
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground whitespace-nowrap"
+              >
+                {isLoading ? 'Sending...' : 'Send'}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
