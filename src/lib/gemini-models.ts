@@ -5,11 +5,22 @@ export interface GeminiModel {
 }
 
 export const GEMINI_MODELS: GeminiModel[] = [
-  // Gemini 2.5 Series - Latest Stable
+  // Gemini 3.1 Series - Latest (Recommended)
+  {
+    id: 'gemini-3.1-flash-lite',
+    label: 'Gemini 3.1 Flash-Lite',
+    description: 'High-frequency, cost-efficient multimodal tasks (recommended)',
+  },
+  {
+    id: 'gemini-3.1-pro',
+    label: 'Gemini 3.1 Pro',
+    description: 'Advanced reasoning and complex problem-solving',
+  },
+  // Gemini 2.5 Series - Stable
   {
     id: 'gemini-2.5-pro',
     label: 'Gemini 2.5 Pro',
-    description: 'Most advanced for complex tasks and reasoning (default)',
+    description: 'Advanced for complex tasks and reasoning',
   },
   {
     id: 'gemini-2.5-flash',
@@ -21,22 +32,11 @@ export const GEMINI_MODELS: GeminiModel[] = [
     label: 'Gemini 2.5 Flash-Lite',
     description: 'Fastest and most cost-efficient',
   },
-  // Gemini 2.0 Series - Stable
+  // Gemini 2.0 Series
   {
     id: 'gemini-2.0-flash',
     label: 'Gemini 2.0 Flash',
     description: 'Fast multimodal model with broad capabilities',
-  },
-  // Gemini 1.5 Series - Legacy
-  {
-    id: 'gemini-1.5-pro',
-    label: 'Gemini 1.5 Pro',
-    description: 'Advanced reasoning with 2M token context',
-  },
-  {
-    id: 'gemini-1.5-flash',
-    label: 'Gemini 1.5 Flash',
-    description: 'Fast responses with large context window',
   },
 ];
 
