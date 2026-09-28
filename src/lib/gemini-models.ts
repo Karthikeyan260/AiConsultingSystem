@@ -5,21 +5,20 @@ export interface GeminiModel {
 }
 
 export const GEMINI_MODELS: GeminiModel[] = [
-  // Gemini 2.5 Series - Stable & Working (Recommended)
   {
-    id: 'gemini-2.5-flash',
-    label: 'Gemini 2.5 Flash',
-    description: 'Best price-performance for fast responses (recommended)',
+    id: 'googleai/gemini-3.1-flash-lite',
+    label: 'Gemini 3.1 Flash-Lite',
+    description: 'Fastest and most cost-efficient (recommended)',
   },
   {
-    id: 'gemini-2.5-pro',
-    label: 'Gemini 2.5 Pro',
+    id: 'googleai/gemini-3.8-flash',
+    label: 'Gemini 3.8 Flash',
+    description: 'Best price-performance for fast responses',
+  },
+  {
+    id: 'googleai/gemini-3.1-pro-preview',
+    label: 'Gemini 3.1 Pro',
     description: 'Advanced for complex tasks and reasoning',
-  },
-  {
-    id: 'gemini-2.5-flash-lite',
-    label: 'Gemini 2.5 Flash-Lite',
-    description: 'Fastest and most cost-efficient',
   },
 ];
 
