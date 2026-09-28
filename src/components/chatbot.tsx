@@ -5,7 +5,9 @@ import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {Textarea} from '@/components/ui/textarea';
 import {useState, useRef, useEffect} from 'react';
 import {useToast} from '@/hooks/use-toast';
-import {Bot, Send, User} from 'lucide-react';
+import {ArrowLeft, Bot, Currency, GraduationCap, Heart, Send, ShoppingCart, User} from 'lucide-react';
+import Link from 'next/link';
+import {motion, AnimatePresence} from 'framer-motion';
 import {DEFAULT_GEMINI_MODEL} from '@/lib/gemini-models';
 
 interface ChatMessage {
@@ -17,6 +19,59 @@ interface ChatbotProps {
   domain: string;
   domainImage: string;
 }
+
+interface DomainTheme {
+  icon: typeof Bot;
+  gradient: string;
+  bubble: string;
+  ring: string;
+  chipHover: string;
+  glow: string;
+}
+
+const DOMAIN_THEMES: Record<string, DomainTheme> = {
+  Education: {
+    icon: GraduationCap,
+    gradient: 'from-blue-500 to-indigo-600',
+    bubble: 'bg-blue-600',
+    ring: 'focus-visible:ring-blue-500 focus-visible:border-blue-500',
+    chipHover: 'hover:border-blue-400',
+    glow: 'bg-blue-500/20',
+  },
+  Healthcare: {
+    icon: Heart,
+    gradient: 'from-rose-500 to-pink-600',
+    bubble: 'bg-rose-600',
+    ring: 'focus-visible:ring-rose-500 focus-visible:border-rose-500',
+    chipHover: 'hover:border-rose-400',
+    glow: 'bg-rose-500/20',
+  },
+  Finance: {
+    icon: Currency,
+    gradient: 'from-emerald-500 to-teal-600',
+    bubble: 'bg-emerald-600',
+    ring: 'focus-visible:ring-emerald-500 focus-visible:border-emerald-500',
+    chipHover: 'hover:border-emerald-400',
+    glow: 'bg-emerald-500/20',
+  },
+  Retail: {
+    icon: ShoppingCart,
+    gradient: 'from-amber-500 to-orange-600',
+    bubble: 'bg-amber-600',
+    ring: 'focus-visible:ring-amber-500 focus-visible:border-amber-500',
+    chipHover: 'hover:border-amber-400',
+    glow: 'bg-amber-500/20',
+  },
+};
+
+const DEFAULT_THEME: DomainTheme = {
+  icon: Bot,
+  gradient: 'from-primary to-primary/70',
+  bubble: 'bg-primary',
+  ring: 'focus-visible:ring-primary focus-visible:border-primary',
+  chipHover: 'hover:border-primary/50',
+  glow: 'bg-primary/20',
+};
 
 async function getResponse(domain: string, query: string) {
   const response = await fetch('/api/chat', {
@@ -98,6 +153,8 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   const {toast} = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
+  const theme = DOMAIN_THEMES[domain] ?? DEFAULT_THEME;
+  const DomainIcon = theme.icon;
 
   useEffect(() => {
     textareaRef.current?.focus();
@@ -152,66 +209,102 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   return (
     <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
+        <motion.div
+          initial={{opacity: 0, y: -8}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.4}}
+          className="max-w-2xl mx-auto mb-4"
+        >
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Domains
+          </Link>
+        </motion.div>
+
+        <motion.div
+          initial={{opacity: 0, y: -8}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.4, delay: 0.05}}
+          className="text-center mb-8"
+        >
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
             {domain} Consulting
           </h1>
           <p className="text-muted-foreground">Ask anything about {domain}</p>
-        </div>
+        </motion.div>
 
-        <Card className="w-full max-w-2xl mx-auto border border-border shadow-lg overflow-hidden py-0 gap-0">
-          <CardHeader className="bg-secondary border-b border-border py-4">
-            <CardTitle className="flex items-center gap-3 text-foreground text-base">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <Bot className="h-5 w-5" />
+        <motion.div
+          initial={{opacity: 0, y: 16, scale: 0.98}}
+          animate={{opacity: 1, y: 0, scale: 1}}
+          transition={{duration: 0.4, delay: 0.1}}
+          className="max-w-2xl mx-auto"
+        >
+        <Card className="w-full border border-border shadow-lg overflow-hidden py-0 gap-0">
+          <CardHeader className={`bg-gradient-to-r ${theme.gradient} border-b border-border py-4`}>
+            <CardTitle className="flex items-center gap-3 text-white text-base">
+              <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+                <span className={`absolute inset-0 rounded-full ${theme.glow} animate-ping`} />
+                <DomainIcon className="h-5 w-5 relative" />
               </span>
               <span className="flex flex-col">
-                <span className="font-semibold leading-tight">AI Consulting Assistant</span>
-                <span className="text-xs font-normal text-muted-foreground">Online &middot; Usually replies instantly</span>
+                <span className="font-semibold leading-tight">{domain} Consulting Assistant</span>
+                <span className="text-xs font-normal text-white/80">Online &middot; Usually replies instantly</span>
               </span>
             </CardTitle>
           </CardHeader>
 
           <CardContent className="flex flex-col gap-4 p-4">
             <div className="h-96 rounded-lg bg-background overflow-y-auto flex flex-col gap-3 pr-1">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex items-end gap-2 ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                >
-                  {!message.isUser && (
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary border border-border">
-                      <Bot className="h-4 w-4 text-foreground" />
-                    </span>
-                  )}
-                  <div
-                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
-                      message.isUser
-                        ? 'bg-primary text-primary-foreground rounded-br-sm'
-                        : 'bg-secondary text-foreground rounded-bl-sm border border-border'
-                    }`}
+              <AnimatePresence initial={false}>
+                {messages.map((message, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{opacity: 0, y: 10}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{duration: 0.25}}
+                    className={`flex items-end gap-2 ${message.isUser ? 'justify-end' : 'justify-start'}`}
                   >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
-                  </div>
-                  {message.isUser && (
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 border border-border">
-                      <User className="h-4 w-4 text-foreground" />
-                    </span>
-                  )}
-                </div>
-              ))}
+                    {!message.isUser && (
+                      <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${theme.gradient} text-white`}>
+                        <DomainIcon className="h-4 w-4" />
+                      </span>
+                    )}
+                    <div
+                      className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
+                        message.isUser
+                          ? `${theme.bubble} text-white rounded-br-sm`
+                          : 'bg-secondary text-foreground rounded-bl-sm border border-border'
+                      }`}
+                    >
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                    </div>
+                    {message.isUser && (
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 border border-border">
+                        <User className="h-4 w-4 text-foreground" />
+                      </span>
+                    )}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
 
               {isLoading && (
-                <div className="flex items-end gap-2 justify-start">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary border border-border">
-                    <Bot className="h-4 w-4 text-foreground" />
+                <motion.div
+                  initial={{opacity: 0, y: 10}}
+                  animate={{opacity: 1, y: 0}}
+                  className="flex items-end gap-2 justify-start"
+                >
+                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${theme.gradient} text-white`}>
+                    <DomainIcon className="h-4 w-4" />
                   </span>
                   <div className="flex items-center gap-1 px-4 py-3 rounded-2xl rounded-bl-sm bg-secondary border border-border">
                     <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:-0.3s]" />
                     <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:-0.15s]" />
                     <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce" />
                   </div>
-                </div>
+                </motion.div>
               )}
 
               <div ref={scrollAnchorRef} />
@@ -220,14 +313,17 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
             {showSuggestions && (
               <div className="flex flex-wrap gap-2">
                 {getSuggestedQuestions(domain).map((suggestion, index) => (
-                  <button
+                  <motion.button
                     key={index}
+                    initial={{opacity: 0, y: 8}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{duration: 0.25, delay: 0.15 + index * 0.08}}
                     onClick={() => handleSuggestionClick(suggestion)}
                     disabled={isLoading}
-                    className="text-left px-3 py-2 text-sm bg-secondary hover:bg-secondary/70 rounded-full transition-colors border border-border hover:border-primary/50 text-foreground disabled:opacity-50 disabled:pointer-events-none"
+                    className={`text-left px-3 py-2 text-sm bg-secondary hover:bg-secondary/70 rounded-full transition-colors border border-border ${theme.chipHover} text-foreground disabled:opacity-50 disabled:pointer-events-none`}
                   >
                     {suggestion}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             )}
@@ -240,13 +336,13 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
                 onChange={e => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 rows={1}
-                className="flex-grow rounded-lg border border-border focus-visible:ring-primary focus-visible:border-primary resize-none min-h-11"
+                className={`flex-grow rounded-lg border border-border resize-none min-h-11 ${theme.ring}`}
               />
               <Button
                 type="submit"
                 size="icon"
                 disabled={isLoading || !query.trim()}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground shrink-0"
+                className={`bg-gradient-to-r ${theme.gradient} hover:opacity-90 text-white shrink-0`}
                 aria-label="Send message"
               >
                 <Send className="h-4 w-4" />
@@ -254,6 +350,7 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
             </form>
           </CardContent>
         </Card>
+        </motion.div>
       </div>
     </div>
   );
