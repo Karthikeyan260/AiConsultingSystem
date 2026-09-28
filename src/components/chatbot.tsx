@@ -5,10 +5,11 @@ import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {Textarea} from '@/components/ui/textarea';
 import {useState, useRef, useEffect} from 'react';
 import {useToast} from '@/hooks/use-toast';
-import {ArrowLeft, Bot, Currency, GraduationCap, Heart, Send, ShoppingCart, User} from 'lucide-react';
+import {ArrowLeft, Send, User} from 'lucide-react';
 import Link from 'next/link';
 import {motion, AnimatePresence} from 'framer-motion';
 import {DEFAULT_GEMINI_MODEL} from '@/lib/gemini-models';
+import {DOMAIN_THEMES, DEFAULT_DOMAIN_THEME} from '@/lib/domain-theme';
 
 interface ChatMessage {
   text: string;
@@ -19,59 +20,6 @@ interface ChatbotProps {
   domain: string;
   domainImage: string;
 }
-
-interface DomainTheme {
-  icon: typeof Bot;
-  gradient: string;
-  bubble: string;
-  ring: string;
-  chipHover: string;
-  glow: string;
-}
-
-const DOMAIN_THEMES: Record<string, DomainTheme> = {
-  Education: {
-    icon: GraduationCap,
-    gradient: 'from-blue-500 to-indigo-600',
-    bubble: 'bg-blue-600',
-    ring: 'focus-visible:ring-blue-500 focus-visible:border-blue-500',
-    chipHover: 'hover:border-blue-400',
-    glow: 'bg-blue-500/20',
-  },
-  Healthcare: {
-    icon: Heart,
-    gradient: 'from-rose-500 to-pink-600',
-    bubble: 'bg-rose-600',
-    ring: 'focus-visible:ring-rose-500 focus-visible:border-rose-500',
-    chipHover: 'hover:border-rose-400',
-    glow: 'bg-rose-500/20',
-  },
-  Finance: {
-    icon: Currency,
-    gradient: 'from-emerald-500 to-teal-600',
-    bubble: 'bg-emerald-600',
-    ring: 'focus-visible:ring-emerald-500 focus-visible:border-emerald-500',
-    chipHover: 'hover:border-emerald-400',
-    glow: 'bg-emerald-500/20',
-  },
-  Retail: {
-    icon: ShoppingCart,
-    gradient: 'from-amber-500 to-orange-600',
-    bubble: 'bg-amber-600',
-    ring: 'focus-visible:ring-amber-500 focus-visible:border-amber-500',
-    chipHover: 'hover:border-amber-400',
-    glow: 'bg-amber-500/20',
-  },
-};
-
-const DEFAULT_THEME: DomainTheme = {
-  icon: Bot,
-  gradient: 'from-primary to-primary/70',
-  bubble: 'bg-primary',
-  ring: 'focus-visible:ring-primary focus-visible:border-primary',
-  chipHover: 'hover:border-primary/50',
-  glow: 'bg-primary/20',
-};
 
 async function getResponse(domain: string, query: string) {
   const response = await fetch('/api/chat', {
@@ -153,7 +101,7 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   const {toast} = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
-  const theme = DOMAIN_THEMES[domain] ?? DEFAULT_THEME;
+  const theme = DOMAIN_THEMES[domain] ?? DEFAULT_DOMAIN_THEME;
   const DomainIcon = theme.icon;
 
   useEffect(() => {
@@ -320,7 +268,7 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
                     transition={{duration: 0.25, delay: 0.15 + index * 0.08}}
                     onClick={() => handleSuggestionClick(suggestion)}
                     disabled={isLoading}
-                    className={`text-left px-3 py-2 text-sm bg-secondary hover:bg-secondary/70 rounded-full transition-colors border border-border ${theme.chipHover} text-foreground disabled:opacity-50 disabled:pointer-events-none`}
+                    className={`text-left px-3 py-2 text-sm bg-secondary hover:bg-secondary/70 rounded-full transition-colors border border-border ${theme.hoverBorder} text-foreground disabled:opacity-50 disabled:pointer-events-none`}
                   >
                     {suggestion}
                   </motion.button>

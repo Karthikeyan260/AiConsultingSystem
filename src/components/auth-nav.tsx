@@ -62,7 +62,7 @@ export function AuthNav() {
         Sign In
       </Button>
       <Button
-        className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white"
+        className="bg-primary hover:bg-primary/90 text-primary-foreground"
         onClick={() => router.push("/sign-up")}
       >
         Sign Up

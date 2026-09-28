@@ -4,10 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRouter } from "next/navigation"
 import {
-  SectionIcon as Section,
-  Heart,
-  Currency,
-  ShoppingCart,
   Star,
   Globe,
   Users,
@@ -17,6 +13,7 @@ import {
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Logo from "@/components/logo"
+import { DOMAIN_THEMES } from "@/lib/domain-theme"
 
 import { AuthNav } from '@/components/auth-nav'
 
@@ -25,6 +22,33 @@ export default function Home() {
   const router = useRouter()
   const [isMounted, setIsMounted] = useState(false)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
+  const domainCards = [
+    {
+      domain: "Education",
+      description: "AI consulting for education sector",
+      body: "Explore innovative teaching methods, personalized learning platforms, and effective educational strategies powered by AI.",
+      path: "/domains/education",
+    },
+    {
+      domain: "Healthcare",
+      description: "AI consulting for healthcare sector",
+      body: "Optimize patient care, improve diagnostic accuracy, and explore advancements in medical treatments through AI.",
+      path: "/domains/healthcare",
+    },
+    {
+      domain: "Finance",
+      description: "AI consulting for finance sector",
+      body: "Make informed investment decisions, detect fraud, and navigate complex financial landscapes with AI-powered insights.",
+      path: "/domains/finance",
+    },
+    {
+      domain: "Retail",
+      description: "AI consulting for retail sector",
+      body: "Enhance customer experience, optimize inventory management, and streamline retail operations with AI solutions.",
+      path: "/domains/retail",
+    },
+  ]
+
   const testimonials = [
     {
       text: "AI Consulting System transformed our business with their AI solutions. The insights provided were game-changing for our strategy!",
@@ -84,21 +108,41 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-background/95 border-b border-border">
+      <motion.header
+        className="sticky top-0 z-50 backdrop-blur-md bg-background/95 border-b border-border"
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <div className="container mx-auto flex justify-between items-center py-4 px-4">
-          <div className="flex items-center gap-3">
-            <Logo className="h-10 w-10" />
-            <h1 className="text-2xl font-bold text-primary">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Logo className="h-8 w-8 sm:h-10 sm:w-10 shrink-0" />
+            <h1 className="text-lg sm:text-2xl font-bold text-primary whitespace-nowrap">
               AI Consulting System
             </h1>
           </div>
 
           <AuthNav />
         </div>
-      </header>
+      </motion.header>
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 md:py-32 bg-gradient-to-b from-background to-secondary">
+        <motion.div
+          className="absolute top-10 left-[8%] h-56 w-56 rounded-full bg-primary/20 blur-3xl"
+          animate={{ y: [0, 24, 0], x: [0, 12, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-0 right-[10%] h-64 w-64 rounded-full bg-accent/20 blur-3xl"
+          animate={{ y: [0, -20, 0], x: [0, -16, 0] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-[25%] h-40 w-40 rounded-full bg-rose-500/10 blur-3xl"
+          animate={{ y: [0, 16, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        />
         <motion.div
           className="container mx-auto px-4 text-center relative z-10"
           initial={{ opacity: 0, y: 20 }}
@@ -117,7 +161,7 @@ export default function Home() {
             </span>
           </motion.div>
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-foreground text-balance"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-foreground text-balance"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -138,22 +182,26 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground"
-              onClick={() => router.push("/get-started")}
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-border hover:bg-secondary"
-              onClick={() => router.push("/learn-more")}
-            >
-              Learn More
-            </Button>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15, ease: "easeOut" }}>
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto"
+                onClick={() => router.push("/get-started")}
+              >
+                Get Started
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15, ease: "easeOut" }}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-border hover:bg-secondary w-full sm:w-auto"
+                onClick={() => router.push("/learn-more")}
+              >
+                Learn More
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
       </section>
@@ -178,9 +226,11 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <motion.div
               variants={itemVariants}
-              className="bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="group bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30"
             >
-              <div className="h-12 w-12 rounded-lg bg-primary flex items-center justify-center text-primary-foreground mb-6">
+              <div className="h-12 w-12 rounded-lg bg-primary flex items-center justify-center text-primary-foreground mb-6 transition-transform duration-300 group-hover:scale-110">
                 <Globe className="h-6 w-6" />
               </div>
               <h3 className="font-semibold text-lg mb-3 text-foreground">Global Reach</h3>
@@ -191,9 +241,11 @@ export default function Home() {
 
             <motion.div
               variants={itemVariants}
-              className="bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="group bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30"
             >
-              <div className="h-12 w-12 rounded-lg bg-accent flex items-center justify-center text-accent-foreground mb-6">
+              <div className="h-12 w-12 rounded-lg bg-accent flex items-center justify-center text-accent-foreground mb-6 transition-transform duration-300 group-hover:scale-110">
                 <Users className="h-6 w-6" />
               </div>
               <h3 className="font-semibold text-lg mb-3 text-foreground">Expert Team</h3>
@@ -204,9 +256,11 @@ export default function Home() {
 
             <motion.div
               variants={itemVariants}
-              className="bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="group bg-card p-8 rounded-lg border border-border hover:shadow-lg hover:border-primary/30"
             >
-              <div className="h-12 w-12 rounded-lg bg-primary/60 flex items-center justify-center text-primary-foreground mb-6">
+              <div className="h-12 w-12 rounded-lg bg-primary/60 flex items-center justify-center text-primary-foreground mb-6 transition-transform duration-300 group-hover:scale-110">
                 <Star className="h-6 w-6" />
               </div>
               <h3 className="font-semibold text-lg mb-3 text-foreground">Proven Results</h3>
@@ -236,191 +290,148 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <motion.div variants={itemVariants}>
-              <Card
-                className="h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/30 cursor-pointer"
-                onClick={() => router.push("/domains/education")}
-              >
-                <div className="h-1 bg-primary"></div>
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
-                      <Section className="h-5 w-5" />
-                    </div>
-                    <CardTitle className="text-lg">Education</CardTitle>
-                  </div>
-                  <CardDescription className="mt-2">AI consulting for education sector</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Explore innovative teaching methods, personalized learning platforms, and effective educational strategies powered by AI.
-                  </p>
-                  <div className="mt-4 flex items-center text-primary font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </div>
-                </CardContent>
-              </Card>
+            {domainCards.map((card) => {
+              const theme = DOMAIN_THEMES[card.domain]
+              const DomainIcon = theme.icon
+              return (
+                <motion.div
+                  key={card.domain}
+                  variants={itemVariants}
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+                  <Card
+                    className={`h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border ${theme.hoverBorder} cursor-pointer`}
+                    onClick={() => router.push(card.path)}
+                  >
+                    <CardHeader>
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${theme.solidBg} ${theme.solidText} transition-transform duration-300 group-hover:scale-110`}>
+                          <DomainIcon className="h-5 w-5" />
+                        </div>
+                        <CardTitle className="text-lg">{card.domain}</CardTitle>
+                      </div>
+                      <CardDescription className="mt-2">{card.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{card.body}</p>
+                      <div className={`mt-4 flex items-center ${theme.solidText} font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity`}>
+                        Learn more
+                        <ArrowRight className="ml-1 h-4 w-4" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Author Info Section */}
+      <motion.section
+        className="py-20 bg-secondary"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <div className="container mx-auto px-4">
+          <motion.div variants={itemVariants} className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              Meet Our Team
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Our team of AI experts brings years of experience and innovation to help your business succeed.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg"
+            >
+              <img
+                src="https://avatars.githubusercontent.com/u/140727545?v=4"
+                alt="Karthikeyan"
+                className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
+              />
+              <h3 className="font-semibold text-lg mb-2 text-foreground">Karthikeyan</h3>
+              <p className="text-sm text-muted-foreground mb-3">FullStack Developer</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Karthikeyan specializes in AI strategy and implementation, helping businesses achieve their goals with cutting-edge solutions.
+              </p>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
-              <Card
-                className="h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/30 cursor-pointer"
-                onClick={() => router.push("/domains/healthcare")}
-              >
-                <div className="h-1 bg-primary"></div>
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
-                      <Heart className="h-5 w-5" />
-                    </div>
-                    <CardTitle className="text-lg">Healthcare</CardTitle>
-                  </div>
-                  <CardDescription className="mt-2">AI consulting for healthcare sector</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Optimize patient care, improve diagnostic accuracy, and explore advancements in medical treatments through AI.
-                  </p>
-                  <div className="mt-4 flex items-center text-primary font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </div>
-                </CardContent>
-              </Card>
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg"
+            >
+              <img
+                src="https://avatars.githubusercontent.com/u/142210572?v=4"
+                alt="Gokul"
+                className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
+              />
+              <h3 className="font-semibold text-lg mb-2 text-foreground">Gokul</h3>
+              <p className="text-sm text-muted-foreground mb-3">Data Scientist</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Gokul has over a decade of experience in data analytics and machine learning, delivering actionable insights for clients.
+              </p>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
-              <Card
-                className="h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/30 cursor-pointer"
-                onClick={() => router.push("/domains/finance")}
-              >
-                <div className="h-1 bg-accent"></div>
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover:bg-accent/20 transition-colors">
-                      <Currency className="h-5 w-5" />
-                    </div>
-                    <CardTitle className="text-lg">Finance</CardTitle>
-                  </div>
-                  <CardDescription className="mt-2">AI consulting for finance sector</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Make informed investment decisions, detect fraud, and navigate complex financial landscapes with AI-powered insights.
-                  </p>
-                  <div className="mt-4 flex items-center text-accent font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card
-                className="h-full overflow-hidden group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/30 cursor-pointer"
-                onClick={() => router.push("/domains/retail")}
-              >
-                <div className="h-1 bg-accent"></div>
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover:bg-accent/20 transition-colors">
-                      <ShoppingCart className="h-5 w-5" />
-                    </div>
-                    <CardTitle className="text-lg">Retail</CardTitle>
-                  </div>
-                  <CardDescription className="mt-2">AI consulting for retail sector</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Enhance customer experience, optimize inventory management, and streamline retail operations with AI solutions.
-                  </p>
-                  <div className="mt-4 flex items-center text-accent font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </div>
-                </CardContent>
-              </Card>
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg"
+            >
+              <img
+                src="https://raw.githubusercontent.com/Karthikeyan260/memory-game/refs/heads/main/5.png"
+                alt="Murugadass"
+                className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
+              />
+              <h3 className="font-semibold text-lg mb-2 text-foreground">Murugadass</h3>
+              <p className="text-sm text-muted-foreground mb-3">UI/UX Designer</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Murugadass designs and implements AI-driven solutions tailored to meet the unique needs of businesses across industries.
+              </p>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-{/* Author Info Section */}
-<section className="py-20 bg-secondary">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-16">
-      <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-        Meet Our Team
-      </h2>
-      <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-        Our team of AI experts brings years of experience and innovation to help your business succeed.
-      </p>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {/* Author 1 */}
-      <div className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg transition-all duration-300">
-        <img
-          src="https://avatars.githubusercontent.com/u/140727545?v=4"
-          alt="Karthikeyan"
-          className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
-        />
-        <h3 className="font-semibold text-lg mb-2 text-foreground">Karthikeyan</h3>
-        <p className="text-sm text-muted-foreground mb-3">FullStack Developer</p>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Karthikeyan specializes in AI strategy and implementation, helping businesses achieve their goals with cutting-edge solutions.
-        </p>
-      </div>
-
-      {/* Author 2 */}
-      <div className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg transition-all duration-300">
-        <img
-          src="https://avatars.githubusercontent.com/u/142210572?v=4"
-          alt="Gokul"
-          className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
-        />
-        <h3 className="font-semibold text-lg mb-2 text-foreground">Gokul</h3>
-        <p className="text-sm text-muted-foreground mb-3">Data Scientist</p>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Gokul has over a decade of experience in data analytics and machine learning, delivering actionable insights for clients.
-        </p>
-      </div>
-
-      {/* Author 3 */}
-      <div className="text-center bg-card p-8 rounded-lg border border-border hover:shadow-lg transition-all duration-300">
-        <img
-          src="https://raw.githubusercontent.com/Karthikeyan260/memory-game/refs/heads/main/5.png"
-          alt="Murugadass"
-          className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
-        />
-        <h3 className="font-semibold text-lg mb-2 text-foreground">Murugadass</h3>
-        <p className="text-sm text-muted-foreground mb-3">UI/UX Designer</p>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Murugadass designs and implements AI-driven solutions tailored to meet the unique needs of businesses across industries.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
       {/* Testimonials Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
               What Our Clients Say
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Hear from businesses that have transformed their operations with our AI consulting services.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto"
+          >
             <div className="relative overflow-hidden rounded-2xl bg-card shadow-lg border border-border/50 p-8 md:p-12">
-              <div className="absolute top-0 right-0 -mt-4 -mr-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 blur-2xl"></div>
-              <div className="absolute bottom-0 left-0 -mb-4 -ml-4 h-24 w-24 rounded-full bg-gradient-to-br from-blue-500/20 to-teal-500/20 blur-2xl"></div>
+              <div className="absolute top-0 right-0 -mt-4 -mr-4 h-24 w-24 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 blur-2xl"></div>
+              <div className="absolute bottom-0 left-0 -mb-4 -ml-4 h-24 w-24 rounded-full bg-gradient-to-br from-accent/20 to-primary/20 blur-2xl"></div>
 
               <div className="relative">
                 <div className="mb-6 text-4xl text-primary">"</div>
@@ -440,7 +451,7 @@ export default function Home() {
                     >
                       <p className="text-lg md:text-xl italic text-foreground/90 mb-6">{testimonial.text}</p>
                       <div className="flex items-center">
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg">
+                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg">
                           {testimonial.author.charAt(0)}
                         </div>
                         <div className="ml-4">
@@ -466,13 +477,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-500/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <motion.div
@@ -481,7 +492,7 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
                 Ready to Transform Your Business with AI?
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
@@ -489,21 +500,25 @@ export default function Home() {
                 services.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white"
-                  onClick={() => router.push("/contact")}
-                >
-                  Schedule a Consultation
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-primary/20 hover:bg-primary/10"
-                  onClick={() => router.push("/case-studies")}
-                >
-                  View Case Studies
-                </Button>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15, ease: "easeOut" }}>
+                  <Button
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto"
+                    onClick={() => router.push("/contact")}
+                  >
+                    Schedule a Consultation
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15, ease: "easeOut" }}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-primary/20 hover:bg-primary/10 w-full sm:w-auto"
+                    onClick={() => router.push("/case-studies")}
+                  >
+                    View Case Studies
+                  </Button>
+                </motion.div>
               </div>
             </motion.div>
           </div>
@@ -517,7 +532,7 @@ export default function Home() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Logo  className="h-8 w-8" />
-                <h3 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+                <h3 className="text-xl font-bold text-primary">
                   AI Consulting System
                 </h3>
               </div>
