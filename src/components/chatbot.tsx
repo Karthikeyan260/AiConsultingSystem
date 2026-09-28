@@ -2,12 +2,11 @@
 
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Textarea} from '@/components/ui/textarea';
 import {useState, useRef, useEffect} from 'react';
 import {useToast} from '@/hooks/use-toast';
-import Image from 'next/image';
-import {GEMINI_MODELS, DEFAULT_GEMINI_MODEL} from '@/lib/gemini-models';
+import {Bot, Send, User} from 'lucide-react';
+import {DEFAULT_GEMINI_MODEL} from '@/lib/gemini-models';
 
 interface ChatMessage {
   text: string;
@@ -19,7 +18,7 @@ interface ChatbotProps {
   domainImage: string;
 }
 
-async function getResponse(domain: string, query: string, model: string) {
+async function getResponse(domain: string, query: string) {
   const response = await fetch('/api/chat', {
     method: 'POST',
     headers: {
@@ -29,7 +28,7 @@ async function getResponse(domain: string, query: string, model: string) {
       domain: domain,
       query: query,
       userNeed: 'General Consulting',
-      model: model,
+      model: DEFAULT_GEMINI_MODEL,
     }),
   });
 
@@ -96,9 +95,9 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
-  const [selectedModel, setSelectedModel] = useState(DEFAULT_GEMINI_MODEL);
   const {toast} = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const scrollAnchorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     textareaRef.current?.focus();
@@ -106,23 +105,21 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
     setMessages([{ text: welcomeMessage, isUser: false }]);
   }, [domain]);
 
-  const sendMessage = async () => {
-    if (!query.trim()) return;
+  useEffect(() => {
+    scrollAnchorRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isLoading]);
+
+  const sendMessage = async (text: string) => {
+    if (!text.trim()) return;
 
     setIsLoading(true);
     setShowSuggestions(false);
-    const userMessage = { text: query, isUser: true };
-    setMessages(prevMessages => [...prevMessages, userMessage]);
+    setMessages(prevMessages => [...prevMessages, { text, isUser: true }]);
     setQuery('');
 
     try {
-      const botResponse = await getResponse(domain, query, selectedModel);
-      const botMessage = { text: botResponse, isUser: false };
-      setMessages(prevMessages => [...prevMessages, botMessage]);
-      toast({
-        title: 'Response Generated',
-        description: 'The chatbot has generated a response.',
-      });
+      const botResponse = await getResponse(domain, text);
+      setMessages(prevMessages => [...prevMessages, { text: botResponse, isUser: false }]);
     } catch (error: any) {
       console.error('Error generating response:', error);
       toast({
@@ -137,21 +134,18 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion);
-    setTimeout(() => {
-      sendMessage();
-    }, 100);
+    sendMessage(suggestion);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    sendMessage();
+    sendMessage(query);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      sendMessage(query);
     }
   };
 
@@ -164,76 +158,81 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
           </h1>
           <p className="text-muted-foreground">Ask anything about {domain}</p>
         </div>
-        
-        <Card className="w-full max-w-2xl mx-auto border border-border">
-          <CardHeader className="bg-secondary border-b border-border">
-            <CardTitle className="text-foreground">AI Consulting Assistant</CardTitle>
-            <div className="flex flex-col gap-3 mt-4">
-              <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">
-                  Select Model
-                </label>
-                <Select value={selectedModel} onValueChange={setSelectedModel}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Choose a model" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {GEMINI_MODELS.map((m) => (
-                      <SelectItem
-                        key={m.id}
-                        value={m.id}
-                        aria-label={`${m.label}: ${m.description}`}
-                      >
-                        <div className="flex flex-col">
-                          <span className="font-medium">{m.label}</span>
-                          <span className="text-xs text-muted-foreground">{m.description}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+
+        <Card className="w-full max-w-2xl mx-auto border border-border shadow-lg overflow-hidden py-0 gap-0">
+          <CardHeader className="bg-secondary border-b border-border py-4">
+            <CardTitle className="flex items-center gap-3 text-foreground text-base">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <Bot className="h-5 w-5" />
+              </span>
+              <span className="flex flex-col">
+                <span className="font-semibold leading-tight">AI Consulting Assistant</span>
+                <span className="text-xs font-normal text-muted-foreground">Online &middot; Usually replies instantly</span>
+              </span>
+            </CardTitle>
           </CardHeader>
-          
-        <CardContent className="flex flex-col gap-4">
-          <div className="h-96 border border-border rounded-lg p-4 bg-background overflow-y-auto flex flex-col gap-3">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-              >
+
+          <CardContent className="flex flex-col gap-4 p-4">
+            <div className="h-96 rounded-lg bg-background overflow-y-auto flex flex-col gap-3 pr-1">
+              {messages.map((message, index) => (
                 <div
-                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                    message.isUser
-                      ? 'bg-primary text-primary-foreground rounded-br-none'
-                      : 'bg-secondary text-foreground rounded-bl-none border border-border'
-                  }`}
+                  key={index}
+                  className={`flex items-end gap-2 ${message.isUser ? 'justify-end' : 'justify-start'}`}
                 >
-                  <p className="text-sm leading-relaxed">{message.text}</p>
+                  {!message.isUser && (
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary border border-border">
+                      <Bot className="h-4 w-4 text-foreground" />
+                    </span>
+                  )}
+                  <div
+                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
+                      message.isUser
+                        ? 'bg-primary text-primary-foreground rounded-br-sm'
+                        : 'bg-secondary text-foreground rounded-bl-sm border border-border'
+                    }`}
+                  >
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                  </div>
+                  {message.isUser && (
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 border border-border">
+                      <User className="h-4 w-4 text-foreground" />
+                    </span>
+                  )}
                 </div>
-              </div>
-            ))}
-          </div>
-            
+              ))}
+
+              {isLoading && (
+                <div className="flex items-end gap-2 justify-start">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary border border-border">
+                    <Bot className="h-4 w-4 text-foreground" />
+                  </span>
+                  <div className="flex items-center gap-1 px-4 py-3 rounded-2xl rounded-bl-sm bg-secondary border border-border">
+                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:-0.3s]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:-0.15s]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce" />
+                  </div>
+                </div>
+              )}
+
+              <div ref={scrollAnchorRef} />
+            </div>
+
             {showSuggestions && (
-              <div className="bg-secondary p-4 rounded-lg border border-border">
-                <p className="text-sm font-medium text-foreground mb-3">Suggested Questions</p>
-                <div className="flex flex-col gap-2">
-                  {getSuggestedQuestions(domain).map((suggestion, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleSuggestionClick(suggestion)}
-                      className="text-left p-3 text-sm bg-card hover:bg-card/80 rounded-lg transition-colors border border-border hover:border-primary/50 text-foreground"
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-2">
+                {getSuggestedQuestions(domain).map((suggestion, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    disabled={isLoading}
+                    className="text-left px-3 py-2 text-sm bg-secondary hover:bg-secondary/70 rounded-full transition-colors border border-border hover:border-primary/50 text-foreground disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
               </div>
             )}
-            
-            <form onSubmit={handleSubmit} className="flex gap-2">
+
+            <form onSubmit={handleSubmit} className="flex gap-2 items-end">
               <Textarea
                 ref={textareaRef}
                 placeholder={`Ask about ${domain}...`}
@@ -241,14 +240,16 @@ export default function Chatbot({domain, domainImage}: ChatbotProps) {
                 onChange={e => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 rows={1}
-                className="flex-grow rounded-lg border border-border focus:ring-primary focus:border-primary resize-none"
+                className="flex-grow rounded-lg border border-border focus-visible:ring-primary focus-visible:border-primary resize-none min-h-11"
               />
-              <Button 
-                type="submit" 
-                disabled={isLoading}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground whitespace-nowrap"
+              <Button
+                type="submit"
+                size="icon"
+                disabled={isLoading || !query.trim()}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground shrink-0"
+                aria-label="Send message"
               >
-                {isLoading ? 'Sending...' : 'Send'}
+                <Send className="h-4 w-4" />
               </Button>
             </form>
           </CardContent>
